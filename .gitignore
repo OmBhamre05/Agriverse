@@ -1,0 +1,19 @@
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# Build files (for Vite)
+frontend/dist/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
