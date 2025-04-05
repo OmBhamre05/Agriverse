@@ -5,10 +5,20 @@ const authSchema = new mongoose.Schema({
   phone: {
     type: String,
     sparse: true,
-    unique: true
+    unique: true,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{10}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number! Must be 10 digits.`
+    }
   },
   password: {
-    type: String
+    type: String,
+    required: function() {
+      return !this.google_id; // Password required only if not using Google OAuth
+    },
+    minlength: [6, 'Password must be at least 6 characters long']
   },
   google_id: {
     type: String,
@@ -17,17 +27,31 @@ const authSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    sparse: true
+    sparse: true,
+    validate: {
+      validator: function(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid email address!`
+    }
   },
   role: {
     type: String,
-    enum: ['user', 'farmer'],
+    enum: ['user', 'farmer', 'mentor'],
     default: 'user'
   },
   farmer_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Farmer',
     default: null
+  },
+  name: {
+    type: String,
+    trim: true
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
   }
 }, {
   timestamps: true
@@ -36,14 +60,25 @@ const authSchema = new mongoose.Schema({
 // Hash password before saving
 authSchema.pre('save', async function(next) {
   if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
+    try {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
   }
-  next();
 });
 
 // Compare password method
 authSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = mongoose.model('Auth', authSchema);

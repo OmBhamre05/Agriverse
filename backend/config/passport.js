@@ -3,8 +3,35 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const Auth = require('../models/auth.model');
+const bcrypt = require('bcrypt');
 
 module.exports = (passport) => {
+  // Local Strategy for phone/password login
+  passport.use(new LocalStrategy({
+    usernameField: 'phone',
+    passwordField: 'password'
+  }, async (phone, password, done) => {
+    try {
+      // Find user by phone number
+      const user = await Auth.findOne({ phone });
+      
+      // User not found
+      if (!user) {
+        return done(null, false, { message: 'Invalid phone number or password' });
+      }
+
+      // Check password
+      const isMatch = await user.comparePassword(password);
+      if (!isMatch) {
+        return done(null, false, { message: 'Invalid phone number or password' });
+      }
+
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }));
+
   // JWT Strategy
   passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
