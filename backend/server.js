@@ -17,6 +17,9 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/courses', require('./routes/courses'));
+app.use('/api/mentors', require('./routes/mentors'));
+app.use('/api/purchases', require('./routes/purchases'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
