@@ -6,7 +6,6 @@ const dotenv = require('dotenv');
 const path = require('path');
 const { initializeModules } = require('./models/learning.model');
 
-
 // Load environment variables
 dotenv.config();
 
@@ -36,7 +35,7 @@ require('./config/passport')(passport);
 
 // Routes
 app.use('/api/auth', require('./routes/auth.routes'));
-app.use('/api/farmer', require('./routes/farmer.routes'));
+app.use('/api/auth/interests', require('./routes/interests.routes'));
 app.use('/api/learning', require('./routes/learning.routes'));
 
 // Error handling middleware
@@ -45,7 +44,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

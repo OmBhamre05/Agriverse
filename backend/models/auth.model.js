@@ -37,14 +37,13 @@ const authSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'farmer', 'mentor'],
+    enum: ['user', 'mentor'],
     default: 'user'
   },
-  farmer_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Farmer',
-    default: null
-  },
+  interests: [{
+    type: String,
+    required: true
+  }],
   name: {
     type: String,
     trim: true

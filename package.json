@@ -1,0 +1,10 @@
+{
+  "name": "farmer-learning-platform",
+  "version": "1.0.0",
+  "description": "Learning Platform for Farmers",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-backend": "cd backend && npm install"
+  }
+}

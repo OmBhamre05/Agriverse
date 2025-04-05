@@ -32,7 +32,7 @@ const Login = () => {
       } else if (role === "mentor") {
         navigate("/mentor/dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/home");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");

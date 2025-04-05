@@ -30,9 +30,10 @@ const Register = () => {
     try {
       const res = await axiosInstance.post("/auth/register", formData);
       
-      // Show success message and redirect to login
-      alert("Registration successful! Please login with your credentials.");
-      navigate("/login");
+      // Store user data and redirect to interests selection
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      navigate("/select-interests");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
@@ -109,7 +110,6 @@ const Register = () => {
               required
             >
               <option value="user">User</option>
-              <option value="farmer">Farmer</option>
               <option value="mentor">Mentor</option>
             </select>
           </div>
