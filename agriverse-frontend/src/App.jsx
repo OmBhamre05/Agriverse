@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import SelectInterests from './pages/SelectInterests'
+import MentorDashboard from './pages/MentorDashboard'
+import CourseUpload from './pages/CourseUpload'
 import { Toaster } from 'sonner'
 
 const LandingPage = () => (
@@ -32,6 +34,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/select-interests" element={<SelectInterests />} />
+        <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+        <Route path="/mentor/upload-course" element={<CourseUpload />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

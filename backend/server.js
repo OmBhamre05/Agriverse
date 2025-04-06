@@ -37,6 +37,8 @@ require('./config/passport')(passport);
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/auth/interests', require('./routes/interests.routes'));
 app.use('/api/learning', require('./routes/learning.routes'));
+app.use('/api/courses', require('./routes/course.routes'));
+app.use('/api/mentor', require('./routes/mentor.routes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

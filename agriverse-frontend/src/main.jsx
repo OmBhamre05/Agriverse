@@ -11,6 +11,8 @@ import MentorDashboard from './pages/MentorDashboard';
 import CourseDetail from './pages/CourseDetail';
 import SelectInterests from './pages/SelectInterests';
 import Home from './pages/Home';
+import CourseUpload from './pages/CourseUpload';
+import CourseDetails from './pages/CourseDetails';
 
 
 const router = createBrowserRouter([
@@ -18,10 +20,12 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "/dashboard", element: <Dashboard /> },
-  { path: "/mentor/dashboard", element: <MentorDashboard /> },
-  { path: "/course-details", element: <CourseDetail /> },
   { path: "/select-interests", element: <SelectInterests /> },
   { path: "/home", element: <Home /> },
+  // Mentor routes
+  { path: "/mentor/dashboard", element: <MentorDashboard /> },
+  { path: "/mentor/upload-course", element: <CourseUpload /> },
+  { path: "/mentor/courses/:courseId", element: <CourseDetails /> },
 ]);
 
 createRoot(document.getElementById('root')).render(
