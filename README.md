@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# trial
-=======
 # Farmer Learning Platform
 
 A learning platform where farmers can access educational courses and mentors can create and sell their courses.
